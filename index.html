@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BAK3R1's 像素甜點訂購網頁</title>
+  <!-- 引入像素風格字體 -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    body {
+      background-color: #e5dcf5;
+      background-image: 
+        linear-gradient(45deg, #d3c4ee 25%, transparent 25%), 
+        linear-gradient(-45deg, #d3c4ee 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #d3c4ee 75%),
+        linear-gradient(-45deg, transparent 75%, #d3c4ee 75%);
+      background-size: 30px 30px;
+      background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+      margin: 0;
+      padding: 20px 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      background-color: #fffef5;
+      width: 100%;
+      max-width: 520px;
+      border: 4px solid #3c1e5a;
+      box-shadow: 8px 8px 0px #3c1e5a;
+      padding: 24px 20px;
+      position: relative;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .subtitle2 {
+      text-align: left;
+      font-size: 10px;
+      color: #666;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .subtitle3 {
+      text-align: left;
+      font-size: 10px;
+      color: #666;
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+
+    .pixel-card {
+      border: 2px solid #3c1e5a;
+      background-color: #ffffff;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 4px 4px 0px #d3c4ee;
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: #3c1e5a;
+      border-bottom: 2px dashed #a076db;
+      padding-bottom: 6px;
+      margin-top: 0;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .notice-list {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #444;
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .notice-list li {
+      margin-bottom: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      color: #3c1e5a;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"], input[type="tel"], input[type="date"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #3c1e5a;
+      background-color: #faf8ff;
+      font-size: 14px;
+      outline: none;
+      box-shadow: 2px 2px 0px #3c1e5a;
+    }
+
+    input:focus, select:focus {
+      background-color: #fff;
+      border-color: #7b3fe4;
+    }
+
+    .pixel-btn {
+      width: 100%;
+      background-color: #7b3fe4;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 14px;
+      border: 3px solid #3c1e5a;
+      box-shadow: 5px 5px 0px #3c1e5a;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      margin-top: 10px;
+    }
+
+    .pixel-btn:active {
+      transform: translate(3px, 3px);
+      box-shadow: 2px 2px 0px #3c1e5a;
+    }
+
+    .pixel-btn:disabled {
+      background-color: #a076db;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .pickup-info {
+      font-size: 12px;
+      color: #555;
+      background: #f1e9ff;
+      padding: 8px 12px;
+      border-left: 4px solid #7b3fe4;
+      margin-bottom: 10px;
+    }
+
+    .logo-wrapper {
+      text-align: center;
+      margin: 10px 0 10px 0;
+    }
+
+    .brand-logo {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      image-rendering: pixelated; 
+      image-rendering: -crisp-edges;
+      filter: drop-shadow(4px 4px 0px #3c1e5a);
+    }
+
+    .qty-counter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .qty-counter input[type="number"] {
+      width: 80px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 2px 2px 0px #3c1e5a;
+      -moz-appearance: textfield;
+    }
+
+    .qty-counter input[type="number"]::-webkit-outer-spin-button,
+    .qty-counter input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      background-color: #d3c4ee;
+      color: #3c1e5a;
+      border: 2px solid #3c1e5a;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px #3c1e5a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .qty-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px #3c1e5a;
+    }
+
+    .transfer-info-box {
+      background-color: #faf8ff;
+      border: 2px dashed #7b3fe4;
+      padding: 15px;
+      margin-bottom: 16px;
+      text-align: center;
+      box-shadow: 3px 3px 0px #d3c4ee;
+    }
+
+    .transfer-title {
+      font-weight: bold;
+      color: #5c2494;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .bank-details {
+      text-align: left;
+      font-size: 13px;
+      color: #3c1e5a;
+      background-color: #ffffff;
+      padding: 10px;
+      border: 1px solid #3c1e5a;
+      margin-bottom: 12px;
+    }
+
+    .bank-details p {
+      margin: 4px 0;
+    }
+
+    .account-num {
+      font-family: monospace;
+      font-size: 15px;
+      font-weight: bold;
+      color: #7b3fe4;
+      letter-spacing: 1px;
+    }
+
+    .qr-code-img {
+      width: 180px;
+      max-width: 80%;
+      height: auto;
+      border: 3px solid #3c1e5a;
+      box-shadow: 3px 3px 0px #3c1e5a;
+      margin: 5px 0 10px 0;
+      display: inline-block;
+    }
+
+    .transfer-tip {
+      font-size: 12px;
+      color: #e63946;
+      font-weight: bold;
+      background: #ffebee;
+      padding: 6px;
+      border: 1px solid #e63946;
+    }
+
+    .price-summary-box {
+      background-color: #f0f7ff;
+      border: 2px solid #3c1e5a;
+      padding: 12px 15px;
+      margin-top: 15px;
+      box-shadow: 3px 3px 0px #3c1e5a;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .price-divider {
+      border: 0;
+      border-top: 2px dashed #3c1e5a;
+      margin: 8px 0;
+    }
+
+    .price-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #3c1e5a;
+    }
+
+    .total-amount {
+      font-size: 20px;
+      color: #e63946;
+      font-weight: bold;
+      font-family: 'Press Start 2P', monospace, sans-serif;
+    }
+
+    .account-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .copy-btn {
+      background-color: #d3c4ee;
+      color: #3c1e5a;
+      border: 2px solid #3c1e5a;
+      box-shadow: 2px 2px 0px #3c1e5a;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.1s ease;
+    }
+
+    .copy-btn:hover {
+      background-color: #bfa5e6;
+    }
+
+    .copy-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px #3c1e5a;
+    }
+
+    .pixel-quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .pixel-qty-btn {
+      width: 36px;
+      height: 36px;
+      background-color: #d8c5ed;
+      color: #3c1e5a;
+      border: 2px solid #3c1e5a;
+      box-shadow: 2px 2px 0px #3c1e5a;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      transition: all 0.05s ease;
+    }
+
+    .pixel-qty-btn:hover {
+      background-color: #c9b0e5;
+    }
+
+    .pixel-qty-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px #3c1e5a;
+    }
+
+    .pixel-qty-input {
+      width: 70px;
+      height: 36px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #3c1e5a;
+      border: 2px solid #3c1e5a;
+      box-shadow: 2px 2px 0px #3c1e5a;
+      background-color: #ffffff;
+      outline: none;
+      padding: 0;
+    }
+
+    /* 上傳遮罩樣式 */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(60, 30, 90, 0.75);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(2px);
+    }
+
+    .loading-card {
+      background-color: #fffef5;
+      border: 4px solid #3c1e5a;
+      box-shadow: 6px 6px 0px #000;
+      padding: 30px 24px;
+      text-align: center;
+      max-width: 300px;
+      width: 80%;
+    }
+
+    .pixel-spinner {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 16px auto;
+      border: 6px solid #d3c4ee;
+      border-top: 6px solid #7b3fe4;
+      border-radius: 0;
+      animation: spin 0.8s steps(8) infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 14px;
+      font-weight: bold;
+      color: #3c1e5a;
+      letter-spacing: 0.5px;
+    }
+
+    /* 成功彈窗樣式 */
+    .success-modal-card {
+      background-color: #fffef5;
+      border: 4px solid #3c1e5a;
+      box-shadow: 8px 8px 0px #000;
+      padding: 24px 20px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .success-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #7b3fe4;
+      margin-bottom: 8px;
+    }
+
+    .social-links-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .social-btn {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      border: 2px solid #3c1e5a;
+      box-shadow: 3px 3px 0px #3c1e5a;
+      transition: all 0.1s ease;
+    }
+
+    .social-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #3c1e5a;
+    }
+
+    .btn-line {
+      background-color: #06c755;
+      color: #ffffff;
+    }
+
+    .btn-ig {
+      background-color: #e1306c;
+      color: #ffffff;
+    }
+
+    .preservation-box {
+      border: 2px dashed #7b3fe4;
+      background-color: #faf8ff;
+      padding: 10px;
+      margin: 15px 0;
+    }
+
+    .preservation-img {
+      width: 100%;
+      height: auto;
+      border: 2px solid #3c1e5a;
+      box-shadow: 3px 3px 0px #3c1e5a;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 上傳等待遮罩 -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+  <div class="loading-card">
+    <div class="pixel-spinner"></div>
+    <div class="loading-text">👾 訂單傳送中...<br><span style="font-size: 12px; color: #666; font-weight: normal;">請稍候，切勿關閉網頁</span></div>
+  </div>
+</div>
+
+<!-- 訂單成功送出彈窗 -->
+<div id="successModal" class="loading-overlay" style="display: none;">
+  <div class="success-modal-card">
+    <div class="success-title">🎉 訂單已成功送出！</div>
+    <p style="font-size: 13px; color: #444; margin-bottom: 15px; line-height: 1.5;">
+      感謝您的訂購！請記得透過社群帳號私訊闆娘，或留意我們的聯繫訊息以確認訂單喔～
+    </p>
+
+    <!-- 社群連結按鈕區 -->
+    <div class="social-links-container">
+      <!-- ⚠️ 請將下方 href 替換為你的 LINE 官方帳號連結與 IG 帳號連結 -->
+      <a href="https://lin.ee/9BWRKh7" target="_blank" class="social-btn btn-line">💬 點此開啟 官方 LINE</a>
+      <a href="https://www.instagram.com/bak3r1.s?stkn=MXZkdTB3dm95MHI5dQ%3D%3D&utm_source=qr" target="_blank" class="social-btn btn-ig">📸 點此前往 官方 IG</a>
+    </div>
+
+    <!-- 保存方式圖示區 -->
+    <div class="preservation-box">
+      <img src="保存須知.png" alt="保存須知" class="preservation-img">
+    </div>
+
+    <button type="button" class="pixel-btn" onclick="closeSuccessModal()">我知道了！</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="logo-wrapper">
+    <img src="LOGO.png" alt="BAK3R1's LOGO" class="brand-logo">
+  </div>
+  <div class="subtitle">👾4吋巴斯克蛋糕🍰</div>
+
+  <!-- 面交須知 -->
+  <div class="pixel-card">
+    <div class="section-title">⚠️ 面交須知</div>
+    <ol class="notice-list">
+      <li>下單後 2 週內製作完成。</li>
+      <li>急單最快 2 天後面交。</li>
+      <li>完工後會私訊約定面交時間。</li>
+      <li>付款方式：匯款 / 面交付現（付現請備妥零錢，恕不找零）。</li>
+      <li>若面交後無法立即冷藏冷凍，請自備保冷袋或加購 $20 保冷袋。</li>
+    </ol>
+  </div>
+
+  <form id="orderForm">
+    <!-- 顧客聯絡資料 -->
+    <div class="pixel-card">
+      <div class="section-title">👤 訂購人資訊</div>
+      <div class="form-group">
+        <label for="name">顧客姓名 *</label>
+        <input type="text" id="name" required placeholder="請輸入姓名">
+      </div>
+      <div class="form-group">
+        <label for="phone">聯絡電話 *</label>
+        <input type="tel" id="phone" required placeholder="例如：0912345678">
+      </div>
+      <div class="form-group">
+        <label>社群聯絡方式 (請擇一填寫) *</label>
+        <div class="subtitle2">請勿關閉官方LINE通知 & 記得追蹤IG帳號</div>
+        <input type="text" id="contact_LINEsocial" placeholder="LINE 好友連結或 ID">
+        <input type="text" style="margin-top: 10px;" id="contact_IGsocial" placeholder="IG 帳號連結或 ID">
+      </div>
+    </div>
+
+    <!-- 面交地點與時間 -->
+    <div class="pixel-card">
+      <div class="section-title">📍 面交地點與時間</div>
+      <div class="pickup-info">
+        <b>💡 時間參考：</b><br>
+        • 海大人社院：週一 08:30-10:30 | 週三 08:30-12:30 | 週四 08:30-10:30<br>
+        • 全家深美店：平日 20:30-21:30 | 週末 12:30-21:30
+      </div>
+      
+      <div class="form-group">
+        <label for="pickup_date">希望面交日期 *</label>
+        <input type="date" id="pickup_date" required onchange="handleDateChange()">
+      </div>
+
+      <div class="form-group">
+        <label for="pickup_location">面交地點 *</label>
+        <select id="pickup_location" required onchange="updateTimeOptions()">
+          <option value="">-- 請先選擇面交日期 --</option>
+          <option value="海大人社院 6樓電梯口">海大人社院 6樓電梯口</option>
+          <option value="全家 基隆深美店">全家 基隆深美店</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="pickup_time_slot">希望面交時間 *</label>
+        <select id="pickup_time_slot" required>
+          <option value="">-- 請先選擇地點與日期 --</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 商品選擇 -->
+    <div class="pixel-card">
+      <div class="section-title">🍰 選擇訂購數量與口味</div>
+      
+      <div class="form-group">
+        <label>訂購總數量 (顆) *</label>
+        <div class="qty-counter">
+          <button type="button" class="qty-btn" onclick="changeQty(-1)">-</button>
+          <input type="number" id="cake_quantity" value="1" min="1" max="20" required onchange="generateCakeFields()">
+          <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+
+      <div id="cake_items_container"></div>
+
+      <!-- 保冷袋與折扣 -->
+      <div class="section-title" style="margin-top: 15px;">🛍️ 其他選項</div>
+
+      <div class="form-group">
+        <label>加購保冷袋 ($20/個) <span class="subtitle3">（1 個最多可裝 3 顆蛋糕）</span></label>
+        <div class="pixel-quantity-control">
+          <button type="button" class="pixel-qty-btn" onclick="changeCoolerQty(-1)">-</button>
+          <input type="number" id="cooler_bag_qty" value="0" min="0" max="10" readonly class="pixel-qty-input">
+          <button type="button" class="pixel-qty-btn" onclick="changeCoolerQty(1)">+</button>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 12px;">
+        <label style="cursor: pointer; color: #5c2494;">
+          <input type="checkbox" id="NtouDiscount" onchange="calculateTotal()"> 🌊 海大師生享 9 折優惠
+        </label>
+      </div>
+    </div>
+    
+    <!-- 付款方式與備註 -->
+    <div class="pixel-card">
+      <div class="section-title">💳 訂單明細與付款</div>
+      
+      <div class="price-summary-box">
+        <div class="price-row">
+          <span>巴斯克蛋糕小計 <span id="cake_flavor_summary" style="font-size: 13px; color: #666; font-weight: normal;"></span>：</span>
+          <span>$<span id="subtotal_cake">0</span></span>
+        </div>
+        <div class="price-row" id="row_cookie" style="display: none;">
+          <span>餅乾底加購 (<span id="cookie_count">0</span> 顆) <span id="cookie_flavor_summary" style="font-size: 13px; color: #666; font-weight: normal;"></span>：</span>
+          <span>+$<span id="subtotal_cookie">0</span></span>
+        </div>
+        <div class="price-row" id="row_discount" style="display: none; color: #e63946;">
+          <span>海大師生9折優惠：</span>
+          <span>-$<span id="subtotal_discount">0</span></span>
+        </div>
+        <div class="price-row" id="row_cooler" style="display: none;">
+          <span>保冷袋加購 (<span id="cooler_count">0</span> 個)：</span>
+          <span>+$<span id="subtotal_cooler">0</span></span>
+        </div>
+        <hr class="price-divider">
+        <div class="price-total">
+          <span>訂單總金額：</span>
+          <span class="total-amount">$<span id="total_price">0</span></span>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 20px;">
+        <label for="payment_method">付款方式 *</label>
+        <select id="payment_method" required onchange="togglePaymentInfo()">
+          <option value="面交付現">面交付現（請自備零錢）</option>
+          <option value="匯款">匯款</option>
+        </select>
+      </div>
+
+      <div id="transfer_info_box" class="transfer-info-box" style="display: none;">
+        <div class="transfer-title">👾 匯款帳號資訊</div>
+        <div class="bank-details">
+          <p><b>銀行：</b>台新銀行 (812) 敦南分行 (0023)</p>
+          <div class="account-row">
+            <p style="margin: 0;"><b>帳號：</b><span id="bank_account_num" class="account-num">2888-10-2432344-4</span></p>
+            <button type="button" class="copy-btn" onclick="copyAccountNum()">複製帳號</button>
+          </div>
+        </div>
+        <img src="qr_code.jpg" alt="TWQR收款碼" class="qr-code-img">
+        <div class="transfer-tip">💡 匯款完成後，請於下方備註欄填寫<b>帳號後五碼</b>方便對帳喔！</div>
+      </div>
+
+      <div class="form-group">
+        <label for="note">備註欄</label>
+        <textarea id="note" rows="2" placeholder="特殊需求、急單或匯款帳號後五碼請在此註明"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" id="submitBtn" class="pixel-btn">👾 送出訂單 🎂</button>
+  </form>
+</div>
+
+<script>
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJLpmGV8oclUn2wIwwngvB6XkCvg-KlA5LOPW4ti8AxB8at6cqVl5KrGSWEuE7iFsVSg/exec';
+
+  const CAKE_PRICE = 150;      
+  const COOKIE_PRICE = 50;     
+  const COOLER_BAG_PRICE = 20; 
+
+  const cakeFlavorOptions = `
+    <option value="">-- 請選擇口味 --</option>
+    <option value="焦糖巴斯克">焦糖巴斯克 ✨新品</option>
+    <option value="原味巴斯克">原味巴斯克 🔥熱銷</option>
+    <option value="開心果巴斯克">開心果巴斯克 🔥熱銷</option>
+    <option value="濃抹茶巴斯克">濃抹茶巴斯克</option>
+    <option value="濃可可巴斯克">濃可可巴斯克</option>
+    <option value="伯爵巴斯克">伯爵巴斯克</option>
+    <option value="芝麻巴斯克">芝麻巴斯克</option>
+    <option value="蘋果肉桂巴斯克">蘋果肉桂巴斯克 (含蘋果泥底)</option>
+  `;
+
+  const cookieBottomOptions = `
+    <option value="無">不加購餅乾底</option>
+    <option value="原味餅乾底">原味餅乾底 (+ $50)</option>
+    <option value="OREO餅乾底">OREO 餅乾底 (+ $50)</option>
+    <option value="焦糖餅乾底">焦糖餅乾底 (+ $50) ✨新品</option>
+  `;
+
+  function changeQty(delta) {
+    const qtyInput = document.getElementById('cake_quantity');
+    let currentVal = parseInt(qtyInput.value) || 1;
+    currentVal += delta;
+    if (currentVal < 1) currentVal = 1;
+    if (currentVal > 20) currentVal = 20;
+    qtyInput.value = currentVal;
+    generateCakeFields();
+  }
+
+  function changeCoolerQty(delta) {
+    const input = document.getElementById('cooler_bag_qty');
+    let currentVal = parseInt(input.value) || 0;
+    currentVal += delta;
+    if (currentVal < 0) currentVal = 0;
+    if (currentVal > 10) currentVal = 10;
+    input.value = currentVal;
+    calculateTotal();
+  }
+
+  function generateCakeFields() {
+    const qtyInput = document.getElementById('cake_quantity');
+    let quantity = parseInt(qtyInput.value) || 1;
+    
+    if (quantity < 1) {
+      quantity = 1;
+      qtyInput.value = 1;
+    }
+    
+    const container = document.getElementById('cake_items_container');
+    container.innerHTML = '';
+
+    for (let i = 1; i <= quantity; i++) {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'cake-item-box';
+      itemDiv.style.cssText = `
+        border: 2px dashed #a076db;
+        padding: 12px;
+        margin-top: 10px;
+        background-color: #faf8ff;
+      `;
+      
+      itemDiv.innerHTML = `
+        <div style="font-weight: bold; color: #5c2494; margin-bottom: 8px;">🎂 第 ${i} 顆巴斯克</div>
+        <div class="form-group">
+          <label>選擇口味 *</label>
+          <select class="cake-flavor-input" required onchange="calculateTotal()">
+            ${cakeFlavorOptions}
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label>餅乾底加購 (+$50)</label>
+          <select class="cookie-bottom-input" onchange="calculateTotal()">
+            ${cookieBottomOptions}
+          </select>
+        </div>
+      `;
+      container.appendChild(itemDiv);
+    }
+    calculateTotal();
+  }
+
+  function calculateTotal() {
+    const qtyInput = document.getElementById('cake_quantity');
+    const cakeQty = parseInt(qtyInput.value) || 0;
+    
+    // 1. 蛋糕小計
+    const cakeSubtotal = cakeQty * CAKE_PRICE;
+    document.getElementById('subtotal_cake').innerText = cakeSubtotal;
+
+    // 蛋糕口味統計
+    const flavorCounts = {};
+    const flavorSelects = document.querySelectorAll('.cake-flavor-input');
+    
+    flavorSelects.forEach(select => {
+      const val = select.value;
+      if (val) {
+        const shortName = val.replace('巴斯克', '');
+        flavorCounts[shortName] = (flavorCounts[shortName] || 0) + 1;
+      }
+    });
+
+    const summaryArray = [];
+    for (const [flavor, count] of Object.entries(flavorCounts)) {
+      summaryArray.push(`${flavor}x${count}`);
+    }
+    
+    const summaryText = summaryArray.length > 0 ? `(${summaryArray.join(', ')})` : '';
+    document.getElementById('cake_flavor_summary').innerText = summaryText;
+
+    // 2. 餅乾底小計與口味統計
+    const cookieInputs = document.querySelectorAll('.cookie-bottom-input');
+    let cookieCount = 0;
+    const cookieCounts = {};
+
+    cookieInputs.forEach(select => {
+      const val = select.value;
+      if (val && val !== '無') {
+        cookieCount++;
+        cookieCounts[val] = (cookieCounts[val] || 0) + 1;
+      }
+    });
+
+    const cookieSummaryArray = [];
+    for (const [flavor, count] of Object.entries(cookieCounts)) {
+      cookieSummaryArray.push(`${flavor}x${count}`);
+    }
+    const cookieSummaryText = cookieSummaryArray.length > 0 ? `(${cookieSummaryArray.join(', ')})` : '';
+
+    const cookieSubtotal = cookieCount * COOKIE_PRICE;
+    const rowCookie = document.getElementById('row_cookie');
+    
+    if (cookieCount > 0) {
+      rowCookie.style.display = 'flex';
+      document.getElementById('cookie_count').innerText = cookieCount;
+      document.getElementById('cookie_flavor_summary').innerText = cookieSummaryText;
+      document.getElementById('subtotal_cookie').innerText = cookieSubtotal;
+    } else {
+      rowCookie.style.display = 'none';
+    }
+
+    // 3. 海大 9 折優惠
+    const dessertTotal = cakeSubtotal + cookieSubtotal;
+    const isNtou = document.getElementById('NtouDiscount') ? document.getElementById('NtouDiscount').checked : false;
+    const discountAmount = isNtou ? Math.round(dessertTotal * 0.1) : 0;
+
+    const rowDiscount = document.getElementById('row_discount');
+    if (isNtou && discountAmount > 0) {
+      rowDiscount.style.display = 'flex';
+      document.getElementById('subtotal_discount').innerText = discountAmount;
+    } else {
+      rowDiscount.style.display = 'none';
+    }
+
+    // 4. 保冷袋小計
+    const coolerQty = parseInt(document.getElementById('cooler_bag_qty').value) || 0;
+    const coolerSubtotal = coolerQty * COOLER_BAG_PRICE;
+    const rowCooler = document.getElementById('row_cooler');
+
+    if (coolerQty > 0) {
+      rowCooler.style.display = 'flex';
+      document.getElementById('cooler_count').innerText = coolerQty;
+      document.getElementById('subtotal_cooler').innerText = coolerSubtotal;
+    } else {
+      rowCooler.style.display = 'none';
+    }
+
+    // 5. 總金額
+    const grandTotal = dessertTotal - discountAmount + coolerSubtotal;
+    document.getElementById('total_price').innerText = grandTotal;
+
+    return grandTotal;
+  }
+
+  // 表單送出處理
+  document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const lineVal = document.getElementById('contact_LINEsocial').value.trim();
+    const igVal = document.getElementById('contact_IGsocial').value.trim();
+
+    // 驗證 LINE 或 IG 是否至少填寫一個
+    if (!lineVal && !igVal) {
+      alert('請至少填寫 LINE 好友連結或 IG 帳號連結其中一項！');
+      document.getElementById('contact_LINEsocial').focus();
+      return;
+    }
+
+    // 判斷是否有填寫，有填才加上前綴，沒填則帶空字串
+    const socialLINEContact = lineVal ? `LINE: ${lineVal}` : '';
+    const socialIGContact = igVal ? `IG: ${igVal}` : '';
+
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    // 顯示遮罩並禁用按鈕
+    loadingOverlay.style.display = 'flex';
+    submitBtn.innerText = '傳送訂單中...';
+    submitBtn.disabled = true;
+
+    const flavorInputs = document.querySelectorAll('.cake-flavor-input');
+    const cookieInputs = document.querySelectorAll('.cookie-bottom-input');
+    
+    let orderDetailsList = [];
+    flavorInputs.forEach((flavorEl, index) => {
+      const flavor = flavorEl.value;
+      const cookie = cookieInputs[index].value;
+      const cookieText = (cookie && cookie !== '無') ? `+${cookie}` : '';
+      orderDetailsList.push(`${index + 1}. ${flavor}${cookieText}`);
+    });
+
+    const coolerQty = document.getElementById('cooler_bag_qty').value;
+
+    const payload = {
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      contact_LINEsocial: socialLINEContact,
+      contact_IGsocial: socialIGContact,
+      cake_quantity: document.getElementById('cake_quantity').value,
+      cake_details: orderDetailsList.join('\n'),
+      cooler_bag: coolerQty > 0 ? `${coolerQty}個` : '無',
+      ntou_discount: document.getElementById('NtouDiscount').checked ? '海大9折' : '無',
+      total_price: calculateTotal(),
+      pickup_location: document.getElementById('pickup_location').value,
+      pickup_time: document.getElementById('pickup_date').value + ' ' + document.getElementById('pickup_time_slot').value,
+      payment_method: document.getElementById('payment_method').value,
+      note: document.getElementById('note').value
+    };
+
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      // 顯示成功彈窗
+      document.getElementById('successModal').style.display = 'flex';
+    })
+    .catch(err => {
+      alert('送出失敗，請重試或私訊聯繫老闆！');
+      console.error(err);
+    })
+    .finally(() => {
+      // 隱藏載入遮罩並恢復按鈕狀態
+      loadingOverlay.style.display = 'none';
+      submitBtn.innerText = '👾 送出訂單 🎂';
+      submitBtn.disabled = false;
+    });
+  });
+
+  function closeSuccessModal() {
+    document.getElementById('successModal').style.display = 'none';
+    document.getElementById('orderForm').reset();
+    generateCakeFields();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function initDatePicker() {
+    const dateInput = document.getElementById('pickup_date');
+    const today = new Date();
+    today.setDate(today.getDate() + 7);
+    
+    const minYear = today.getFullYear();
+    const minMonth = String(today.getMonth() + 1).padStart(2, '0');
+    const minDay = String(today.getDate()).padStart(2, '0');
+    
+    dateInput.min = `${minYear}-${minMonth}-${minDay}`;
+  }
+
+  function handleDateChange() {
+    updateLocationOptions();
+    updateTimeOptions();
+  }
+
+  function updateLocationOptions() {
+    const dateVal = document.getElementById('pickup_date').value;
+    const locationSelect = document.getElementById('pickup_location');
+    const currentLocation = locationSelect.value;
+
+    if (!dateVal) {
+      locationSelect.innerHTML = '<option value="">-- 請先選擇面交日期 --</option>';
+      return;
+    }
+
+    const selectedDate = new Date(dateVal);
+    const dayOfWeek = selectedDate.getDay();
+    const isNoNtouDay = (dayOfWeek === 0 || dayOfWeek === 2 || dayOfWeek === 5 || dayOfWeek === 6);
+
+    locationSelect.innerHTML = '<option value="">-- 請選擇面交地點 --</option>';
+
+    if (isNoNtouDay) {
+      const opt = document.createElement('option');
+      opt.value = '全家 基隆深美店';
+      opt.textContent = '全家 基隆深美店';
+      locationSelect.appendChild(opt);
+
+      if (currentLocation === '海大人社院 6樓電梯口') {
+        locationSelect.value = '';
+      } else {
+        locationSelect.value = currentLocation;
+      }
+    } else {
+      const opt1 = document.createElement('option');
+      opt1.value = '海大人社院 6樓電梯口';
+      opt1.textContent = '海大人社院 6樓電梯口';
+      locationSelect.appendChild(opt1);
+
+      const opt2 = document.createElement('option');
+      opt2.value = '全家 基隆深美店';
+      opt2.textContent = '全家 基隆深美店';
+      locationSelect.appendChild(opt2);
+
+      locationSelect.value = currentLocation;
+    }
+  }
+
+  function updateTimeOptions() {
+    const location = document.getElementById('pickup_location').value;
+    const dateVal = document.getElementById('pickup_date').value;
+    const timeSelect = document.getElementById('pickup_time_slot');
+
+    timeSelect.innerHTML = '<option value="">-- 請選擇時間 --</option>';
+
+    if (!location || !dateVal) {
+      timeSelect.innerHTML = '<option value="">-- 請先選擇地點與日期 --</option>';
+      return;
+    }
+
+    const selectedDate = new Date(dateVal);
+    const dayOfWeek = selectedDate.getDay();
+    let slots = [];
+
+    if (location === '海大人社院 6樓電梯口') {
+      if (dayOfWeek === 1) slots = generateTimeSlots(8, 30, 10, 30);
+      else if (dayOfWeek === 3) slots = generateTimeSlots(8, 30, 12, 30);
+      else if (dayOfWeek === 4) slots = generateTimeSlots(8, 30, 10, 30);
+    } else if (location === '全家 基隆深美店') {
+      if (dayOfWeek === 0 || dayOfWeek === 6) slots = generateTimeSlots(12, 30, 21, 30);
+      else slots = generateTimeSlots(20, 30, 21, 30);
+    }
+
+    slots.forEach(slot => {
+      const opt = document.createElement('option');
+      opt.value = slot;
+      opt.textContent = slot;
+      timeSelect.appendChild(opt);
+    });
+  }
+
+  function generateTimeSlots(startHour, startMin, endHour, endMin) {
+    const slots = [];
+    let current = new Date();
+    current.setHours(startHour, startMin, 0, 0);
+
+    const end = new Date();
+    end.setHours(endHour, endMin, 0, 0);
+
+    while (current <= end) {
+      const hh = String(current.getHours()).padStart(2, '0');
+      const mm = String(current.getMinutes()).padStart(2, '0');
+      slots.push(`${hh}:${mm}`);
+      current.setMinutes(current.getMinutes() + 30);
+    }
+    return slots;
+  }
+
+  function togglePaymentInfo() {
+    const paymentMethod = document.getElementById('payment_method').value;
+    const transferBox = document.getElementById('transfer_info_box');
+    transferBox.style.display = (paymentMethod === '匯款') ? 'block' : 'none';
+  }
+
+  function copyAccountNum() {
+    const rawAccount = '28881024323444';
+    const copyBtn = document.querySelector('.copy-btn');
+
+    navigator.clipboard.writeText(rawAccount).then(() => {
+      const originalText = copyBtn.innerText;
+      copyBtn.innerText = '✅已複製';
+      copyBtn.style.backgroundColor = '#b7e4c7';
+
+      setTimeout(() => {
+        copyBtn.innerText = originalText;
+        copyBtn.style.backgroundColor = '#d3c4ee';
+      }, 1500);
+    }).catch(err => {
+      alert('複製失敗，請手動複製帳號：2888-10-2432344-4');
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    generateCakeFields();
+    initDatePicker();
+  });
+</script>
+
+</body>
+</html>
