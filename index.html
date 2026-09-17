@@ -3,7 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BAK3R1's 像素甜點訂購網頁</title>
+  <title>BAK3R1's巴斯克蛋糕訂購網頁</title>
+  <!-- iOS 主畫面圖示 (Apple Touch Icon) -->
+  <link rel="apple-touch-icon" href="ICON.jpg">
+  <link rel="apple-touch-icon" sizes="180x180" href="ICON.jpg">
+
+  <!-- 一般瀏覽器 Favicon 小圖示 -->
+  <link rel="icon" type="image/jpeg" href="ICON.jpg">
+
+  <!-- iOS Web App 全螢幕模式設定 (選填：讓加入桌布後打開像原生 App) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BAK3R1's">
   <!-- 引入像素風格字體 -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
   <style>
@@ -511,16 +522,23 @@
 </div>
 
 <!-- 訂單成功送出彈窗 -->
+<!-- 成功彈窗區塊 -->
 <div id="successModal" class="loading-overlay" style="display: none;">
   <div class="success-modal-card">
-    <div class="success-title">🎉 訂單已成功送出！</div>
-    <p style="font-size: 13px; color: #444; margin-bottom: 15px; line-height: 1.5;">
-      感謝您的訂購！請記得透過社群帳號私訊闆娘，或留意我們的聯繫訊息以確認訂單喔～
+    
+    <h2 style="margin-top: 0; color: #7b3fe4;">🎉 訂單已成功送出！</h2>
+    
+    <!-- 訂單編號展示區 -->
+    <p style="margin-bottom: 4px; font-weight: bold;">您的訂單編號為：</p>
+    <div id="displayOrderId" style="font-family: monospace; font-size: 22px; font-weight: bold; color: #7b3fe4; background: #e5dcf5; padding: 10px; border: 2px dashed #7b3fe4; border-radius: 8px; margin: 8px 0; letter-spacing: 1px;">
+      載入中...
+    </div>
+    <p style="font-size: 12px; color: #666; margin-top: 4px; margin-bottom: 16px;">
+      請妥善保存此編號，未來可用於查詢訂單狀態喔！
     </p>
 
     <!-- 社群連結按鈕區 -->
     <div class="social-links-container">
-      <!-- ⚠️ 請將下方 href 替換為你的 LINE 官方帳號連結與 IG 帳號連結 -->
       <a href="https://lin.ee/9BWRKh7" target="_blank" class="social-btn btn-line">💬 點此開啟 官方 LINE</a>
       <a href="https://www.instagram.com/bak3r1.s?stkn=MXZkdTB3dm95MHI5dQ%3D%3D&utm_source=qr" target="_blank" class="social-btn btn-ig">📸 點此前往 官方 IG</a>
     </div>
@@ -530,7 +548,9 @@
       <img src="保存須知.png" alt="保存須知" class="preservation-img">
     </div>
 
+    <!-- 關閉彈窗按鈕 -->
     <button type="button" class="pixel-btn" onclick="closeSuccessModal()">我知道了！</button>
+
   </div>
 </div>
 
@@ -915,31 +935,45 @@
 
     const coolerQty = document.getElementById('cooler_bag_qty').value;
 
+    // Payload 欄位與 Google Apps Script / 試算表欄位完全對齊
     const payload = {
-      name: document.getElementById('name').value,
+      customerName: document.getElementById('name').value,
       phone: document.getElementById('phone').value,
-      contact_LINEsocial: socialLINEContact,
-      contact_IGsocial: socialIGContact,
-      cake_quantity: document.getElementById('cake_quantity').value,
-      cake_details: orderDetailsList.join('\n'),
-      cooler_bag: coolerQty > 0 ? `${coolerQty}個` : '無',
-      ntou_discount: document.getElementById('NtouDiscount').checked ? '海大9折' : '無',
-      total_price: calculateTotal(),
-      pickup_location: document.getElementById('pickup_location').value,
-      pickup_time: document.getElementById('pickup_date').value + ' ' + document.getElementById('pickup_time_slot').value,
-      payment_method: document.getElementById('payment_method').value,
+      lineId: socialLINEContact,
+      igId: socialIGContact,
+      cakeQty: document.getElementById('cake_quantity').value,
+      cakeDetails: orderDetailsList.join('\n'),
+      coolerBag: coolerQty > 0 ? `${coolerQty}個` : '無',
+      discount: document.getElementById('NtouDiscount').checked ? '海大9折' : '無',
+      totalPrice: calculateTotal(),
+      pickupLocation: document.getElementById('pickup_location').value,
+      pickupTime: document.getElementById('pickup_date').value + ' ' + document.getElementById('pickup_time_slot').value,
+      paymentMethod: document.getElementById('payment_method').value,
       note: document.getElementById('note').value
     };
 
     fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Apps Script 接收 JSON 最佳 Header 格式
       body: JSON.stringify(payload)
     })
-    .then(() => {
-      // 顯示成功彈窗
-      document.getElementById('successModal').style.display = 'flex';
+    .then(res => {
+      if (!res.ok) throw new Error('網路回應異常');
+      return res.json();
+    })
+    .then(data => {
+      if (data.result === 'success') {
+        // 1. 將 Google Apps Script 自動生成並回傳的單號寫入彈窗
+        const orderIdEl = document.getElementById('displayOrderId');
+        if (orderIdEl) {
+          orderIdEl.innerText = data.orderId;
+        }
+
+        // 2. 顯示成功彈窗
+        document.getElementById('successModal').style.display = 'flex';
+      } else {
+        alert('送出失敗：' + (data.error || '未知錯誤'));
+      }
     })
     .catch(err => {
       alert('送出失敗，請重試或私訊聯繫老闆！');
