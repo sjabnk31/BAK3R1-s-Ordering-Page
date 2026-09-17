@@ -775,7 +775,7 @@
   // 動態生成從「今天+7天」開始共 30 天的可預約選項，並排除 9/25 ~ 10/4 暫停面交日
   function populateDateDropdown() {
     const dateSelect = document.getElementById('pickup_date');
-    dateSelect.innerHTML = '<option value="">-- 請選擇面交日期 (預約一週後) --</option>';
+    dateSelect.innerHTML = '<option value="">-- 請選擇面交日期 --</option>';
 
     const startDate = 7;  
     const totalDays = 30; 
