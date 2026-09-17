@@ -115,31 +115,14 @@
       margin-bottom: 6px;
     }
 
-    /* 通用 Form Controls 重置 (強制改回黑紫色文字) */
+    /* 通用 Form Controls 重置 (強制深紫/黑色文字與居中樣式) */
     input[type="text"], input[type="tel"], select, textarea {
-      width: 100%;
-      padding: 10px;
-      border: 2px solid #3c1e5a;
-      background-color: #faf8ff;
-      font-size: 14px;
-      color: #3c1e5a !important;
-      -webkit-text-fill-color: #3c1e5a !important;
-      outline: none;
-      box-shadow: 2px 2px 0px #3c1e5a;
-      border-radius: 0;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    /* 專門修復 iOS Safari input[type="date"] 的樣式與顏色 */
-    input[type="date"] {
       width: 100%;
       height: 44px;
       padding: 8px 10px;
       border: 2px solid #3c1e5a;
       background-color: #faf8ff;
-      font-size: 16px; /* 防止 iOS 點擊時畫面自動放大 */
-      font-family: inherit;
+      font-size: 15px;
       color: #3c1e5a !important;
       -webkit-text-fill-color: #3c1e5a !important;
       outline: none;
@@ -147,24 +130,13 @@
       border-radius: 0;
       -webkit-appearance: none;
       appearance: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       text-align: center;
+      text-align-last: center; /* 讓 iOS select 文字強制居中 */
     }
 
-    /* iOS 專屬：修正日期文字置中與字體顏色 */
-    input[type="date"]::-webkit-date-and-time-value {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #3c1e5a !important;
-      -webkit-text-fill-color: #3c1e5a !important;
+    textarea {
+      height: auto;
+      text-align: left;
     }
 
     input:focus, select:focus {
@@ -207,6 +179,17 @@
       margin-bottom: 10px;
     }
 
+    .pause-notice {
+      font-size: 12px;
+      color: #d00000;
+      background: #fff0f0;
+      padding: 8px 12px;
+      border: 1px dashed #d00000;
+      font-weight: bold;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
     .logo-wrapper {
       text-align: center;
       margin: 10px 0 10px 0;
@@ -231,12 +214,14 @@
 
     .qty-counter input[type="number"] {
       width: 80px;
+      height: 36px;
       text-align: center;
       font-size: 16px;
       font-weight: bold;
       box-shadow: 2px 2px 0px #3c1e5a;
       -moz-appearance: textfield;
       color: #3c1e5a;
+      border: 2px solid #3c1e5a;
     }
 
     .qty-counter input[type="number"]::-webkit-outer-spin-button,
@@ -567,10 +552,7 @@
 <!-- 訂單成功送出彈窗 -->
 <div id="successModal" class="loading-overlay" style="display: none;">
   <div class="success-modal-card">
-    
     <h2 style="margin-top: 0; color: #7b3fe4;">🎉 訂單已成功送出！</h2>
-    
-    <!-- 訂單編號展示區 -->
     <p style="margin-bottom: 4px; font-weight: bold;">您的訂單編號為：</p>
     <div id="displayOrderId" style="font-family: monospace; font-size: 22px; font-weight: bold; color: #7b3fe4; background: #e5dcf5; padding: 10px; border: 2px dashed #7b3fe4; border-radius: 8px; margin: 8px 0; letter-spacing: 1px;">
       載入中...
@@ -579,20 +561,16 @@
       請妥善保存此編號，未來可用於查詢訂單狀態喔！
     </p>
 
-    <!-- 社群連結按鈕區 -->
     <div class="social-links-container">
       <a href="https://lin.ee/9BWRKh7" target="_blank" class="social-btn btn-line">💬 點此開啟 官方 LINE</a>
       <a href="https://www.instagram.com/bak3r1.s?stkn=MXZkdTB3dm95MHI5dQ%3D%3D&utm_source=qr" target="_blank" class="social-btn btn-ig">📸 點此前往 官方 IG</a>
     </div>
 
-    <!-- 保存方式圖示區 -->
     <div class="preservation-box">
       <img src="保存須知.png" alt="保存須知" class="preservation-img">
     </div>
 
-    <!-- 關閉彈窗按鈕 -->
     <button type="button" class="pixel-btn" onclick="closeSuccessModal()">我知道了！</button>
-
   </div>
 </div>
 
@@ -600,7 +578,7 @@
   <div class="logo-wrapper">
     <img src="LOGO.png" alt="BAK3R1's LOGO" class="brand-logo">
   </div>
-  <div class="subtitle">👾4吋巴斯克蛋糕🍰11</div>
+  <div class="subtitle">👾4吋巴斯克蛋糕🍰</div>
 
   <!-- 面交須知 -->
   <div class="pixel-card">
@@ -637,6 +615,12 @@
     <!-- 面交地點與時間 -->
     <div class="pixel-card">
       <div class="section-title">📍 面交地點與時間</div>
+      
+      <!-- 暫停面交提示 -->
+      <div class="pause-notice">
+        📢 9/25 ～ 10/4 暫停面交公告，敬請見諒！
+      </div>
+
       <div class="pickup-info">
         <b>💡 時間參考：</b><br>
         • 海大人社院：週一 08:30-10:30 | 週三 08:30-12:30 | 週四 08:30-10:30<br>
@@ -645,7 +629,9 @@
       
       <div class="form-group">
         <label for="pickup_date">希望面交日期 *</label>
-        <input type="date" id="pickup_date" required onchange="handleDateChange()">
+        <select id="pickup_date" required onchange="handleDateChange()">
+          <option value="">-- 請選擇面交日期 (預約一週後) --</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -784,6 +770,47 @@
     <option value="焦糖餅乾底">焦糖餅乾底 (+ $50) ✨新品</option>
   `;
 
+  const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+
+  // 動態生成從「今天+7天」開始共 30 天的可預約選項，並排除 9/25 ~ 10/4 暫停面交日
+  function populateDateDropdown() {
+    const dateSelect = document.getElementById('pickup_date');
+    dateSelect.innerHTML = '<option value="">-- 請選擇面交日期 (預約一週後) --</option>';
+
+    const startDate = 7;  
+    const totalDays = 30; 
+
+    // 設定暫停面交的區間 (2026/09/25 ~ 2026/10/04)
+    const pauseStart = new Date(2026, 8, 25); // 註：月份 8 代表 9 月
+    const pauseEnd = new Date(2026, 9, 4);    // 註：月份 9 代表 10 月
+
+    for (let i = startDate; i < startDate + totalDays; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() + i);
+
+      // 清除時分秒以精準比較日期
+      const compareDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+      // 如果在 9/25 ~ 10/4 範圍內，自動跳過不列出
+      if (compareDate >= pauseStart && compareDate <= pauseEnd) {
+        continue;
+      }
+
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const date = String(d.getDate()).padStart(2, '0');
+      const dayName = weekDays[d.getDay()];
+
+      const valueStr = `${year}-${month}-${date}`;
+      const labelStr = `${year}/${month}/${date} (${dayName})`;
+
+      const opt = document.createElement('option');
+      opt.value = valueStr;
+      opt.textContent = labelStr;
+      dateSelect.appendChild(opt);
+    }
+  }
+
   function changeQty(delta) {
     const qtyInput = document.getElementById('cake_quantity');
     let currentVal = parseInt(qtyInput.value) || 1;
@@ -850,11 +877,9 @@
     const qtyInput = document.getElementById('cake_quantity');
     const cakeQty = parseInt(qtyInput.value) || 0;
     
-    // 1. 蛋糕小計
     const cakeSubtotal = cakeQty * CAKE_PRICE;
     document.getElementById('subtotal_cake').innerText = cakeSubtotal;
 
-    // 蛋糕口味統計
     const flavorCounts = {};
     const flavorSelects = document.querySelectorAll('.cake-flavor-input');
     
@@ -874,7 +899,6 @@
     const summaryText = summaryArray.length > 0 ? `(${summaryArray.join(', ')})` : '';
     document.getElementById('cake_flavor_summary').innerText = summaryText;
 
-    // 2. 餅乾底小計與口味統計
     const cookieInputs = document.querySelectorAll('.cookie-bottom-input');
     let cookieCount = 0;
     const cookieCounts = {};
@@ -905,7 +929,6 @@
       rowCookie.style.display = 'none';
     }
 
-    // 3. 海大 9 折優惠
     const dessertTotal = cakeSubtotal + cookieSubtotal;
     const isNtou = document.getElementById('NtouDiscount') ? document.getElementById('NtouDiscount').checked : false;
     const discountAmount = isNtou ? Math.round(dessertTotal * 0.1) : 0;
@@ -918,7 +941,6 @@
       rowDiscount.style.display = 'none';
     }
 
-    // 4. 保冷袋小計
     const coolerQty = parseInt(document.getElementById('cooler_bag_qty').value) || 0;
     const coolerSubtotal = coolerQty * COOLER_BAG_PRICE;
     const rowCooler = document.getElementById('row_cooler');
@@ -931,7 +953,6 @@
       rowCooler.style.display = 'none';
     }
 
-    // 5. 總金額
     const grandTotal = dessertTotal - discountAmount + coolerSubtotal;
     document.getElementById('total_price').innerText = grandTotal;
 
@@ -945,21 +966,18 @@
     const lineVal = document.getElementById('contact_LINEsocial').value.trim();
     const igVal = document.getElementById('contact_IGsocial').value.trim();
 
-    // 驗證 LINE 或 IG 是否至少填寫一個
     if (!lineVal && !igVal) {
       alert('請至少填寫 LINE 好友連結或 IG 帳號連結其中一項！');
       document.getElementById('contact_LINEsocial').focus();
       return;
     }
 
-    // 判斷是否有填寫，有填才加上前綴，沒填則帶空字串
     const socialLINEContact = lineVal ? `LINE: ${lineVal}` : '';
     const socialIGContact = igVal ? `IG: ${igVal}` : '';
 
     const submitBtn = document.getElementById('submitBtn');
     const loadingOverlay = document.getElementById('loadingOverlay');
 
-    // 顯示遮罩並禁用按鈕
     loadingOverlay.style.display = 'flex';
     submitBtn.innerText = '傳送訂單中...';
     submitBtn.disabled = true;
@@ -977,7 +995,6 @@
 
     const coolerQty = document.getElementById('cooler_bag_qty').value;
 
-    // Payload 欄位與 Google Apps Script / 試算表欄位完全對齊
     const payload = {
       customerName: document.getElementById('name').value,
       phone: document.getElementById('phone').value,
@@ -1032,19 +1049,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // 設定最小可選日期為「今天 + 7 天」
-  function initDatePicker() {
-    const dateInput = document.getElementById('pickup_date');
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7); // 強制推後 7 天
-    
-    const minYear = targetDate.getFullYear();
-    const minMonth = String(targetDate.getMonth() + 1).padStart(2, '0');
-    const minDay = String(targetDate.getDate()).padStart(2, '0');
-    
-    dateInput.min = `${minYear}-${minMonth}-${minDay}`;
-  }
-
   function handleDateChange() {
     updateLocationOptions();
     updateTimeOptions();
@@ -1060,7 +1064,8 @@
       return;
     }
 
-    const selectedDate = new Date(dateVal);
+    const parts = dateVal.split('-');
+    const selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
     const dayOfWeek = selectedDate.getDay();
     const isNoNtouDay = (dayOfWeek === 0 || dayOfWeek === 2 || dayOfWeek === 5 || dayOfWeek === 6);
 
@@ -1104,7 +1109,8 @@
       return;
     }
 
-    const selectedDate = new Date(dateVal);
+    const parts = dateVal.split('-');
+    const selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
     const dayOfWeek = selectedDate.getDay();
     let slots = [];
 
@@ -1167,8 +1173,8 @@
   }
 
   window.addEventListener('DOMContentLoaded', () => {
+    populateDateDropdown();
     generateCakeFields();
-    initDatePicker();
   });
 </script>
 
