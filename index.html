@@ -11,7 +11,7 @@
   <!-- 一般瀏覽器 Favicon 小圖示 -->
   <link rel="icon" type="image/jpeg" href="ICON.jpg">
 
-  <!-- iOS Web App 全螢幕模式設定 (選填：讓加入桌布後打開像原生 App) -->
+  <!-- iOS Web App 全螢幕模式設定 -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="BAK3R1's">
@@ -115,7 +115,8 @@
       margin-bottom: 6px;
     }
 
-    input[type="text"], input[type="tel"], input[type="date"], select, textarea {
+    /* 通用 Form Controls 重置 */
+    input[type="text"], input[type="tel"], select, textarea {
       width: 100%;
       padding: 10px;
       border: 2px solid #3c1e5a;
@@ -123,6 +124,42 @@
       font-size: 14px;
       outline: none;
       box-shadow: 2px 2px 0px #3c1e5a;
+      border-radius: 0;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    /* 專門修復 iOS Safari input[type="date"] 的樣式 */
+    input[type="date"] {
+      width: 100%;
+      height: 44px;
+      padding: 8px 10px;
+      border: 2px solid #3c1e5a;
+      background-color: #faf8ff;
+      font-size: 16px; /* 防止 iOS 點擊時畫面自動放大 */
+      font-family: inherit;
+      color: #3c1e5a;
+      outline: none;
+      box-shadow: 2px 2px 0px #3c1e5a;
+      border-radius: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* iOS 專屬：修正日期文字置中 */
+    input[type="date"]::-webkit-date-and-time-value {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     input:focus, select:focus {
@@ -522,7 +559,6 @@
 </div>
 
 <!-- 訂單成功送出彈窗 -->
-<!-- 成功彈窗區塊 -->
 <div id="successModal" class="loading-overlay" style="display: none;">
   <div class="success-modal-card">
     
@@ -954,7 +990,7 @@
 
     fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Apps Script 接收 JSON 最佳 Header 格式
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     })
     .then(res => {
@@ -963,13 +999,10 @@
     })
     .then(data => {
       if (data.result === 'success') {
-        // 1. 將 Google Apps Script 自動生成並回傳的單號寫入彈窗
         const orderIdEl = document.getElementById('displayOrderId');
         if (orderIdEl) {
           orderIdEl.innerText = data.orderId;
         }
-
-        // 2. 顯示成功彈窗
         document.getElementById('successModal').style.display = 'flex';
       } else {
         alert('送出失敗：' + (data.error || '未知錯誤'));
@@ -980,7 +1013,6 @@
       console.error(err);
     })
     .finally(() => {
-      // 隱藏載入遮罩並恢復按鈕狀態
       loadingOverlay.style.display = 'none';
       submitBtn.innerText = '👾 送出訂單 🎂';
       submitBtn.disabled = false;
