@@ -115,13 +115,15 @@
       margin-bottom: 6px;
     }
 
-    /* 通用 Form Controls 重置 */
+    /* 通用 Form Controls 重置 (強制改回黑紫色文字) */
     input[type="text"], input[type="tel"], select, textarea {
       width: 100%;
       padding: 10px;
       border: 2px solid #3c1e5a;
       background-color: #faf8ff;
       font-size: 14px;
+      color: #3c1e5a !important;
+      -webkit-text-fill-color: #3c1e5a !important;
       outline: none;
       box-shadow: 2px 2px 0px #3c1e5a;
       border-radius: 0;
@@ -129,7 +131,7 @@
       appearance: none;
     }
 
-    /* 專門修復 iOS Safari input[type="date"] 的樣式 */
+    /* 專門修復 iOS Safari input[type="date"] 的樣式與顏色 */
     input[type="date"] {
       width: 100%;
       height: 44px;
@@ -138,7 +140,8 @@
       background-color: #faf8ff;
       font-size: 16px; /* 防止 iOS 點擊時畫面自動放大 */
       font-family: inherit;
-      color: #3c1e5a;
+      color: #3c1e5a !important;
+      -webkit-text-fill-color: #3c1e5a !important;
       outline: none;
       box-shadow: 2px 2px 0px #3c1e5a;
       border-radius: 0;
@@ -150,7 +153,7 @@
       text-align: center;
     }
 
-    /* iOS 專屬：修正日期文字置中 */
+    /* iOS 專屬：修正日期文字置中與字體顏色 */
     input[type="date"]::-webkit-date-and-time-value {
       margin: 0;
       padding: 0;
@@ -160,6 +163,8 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+      color: #3c1e5a !important;
+      -webkit-text-fill-color: #3c1e5a !important;
     }
 
     input:focus, select:focus {
@@ -231,6 +236,7 @@
       font-weight: bold;
       box-shadow: 2px 2px 0px #3c1e5a;
       -moz-appearance: textfield;
+      color: #3c1e5a;
     }
 
     .qty-counter input[type="number"]::-webkit-outer-spin-button,
@@ -1026,14 +1032,15 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // 設定最小可選日期為「今天 + 7 天」
   function initDatePicker() {
     const dateInput = document.getElementById('pickup_date');
-    const today = new Date();
-    today.setDate(today.getDate() + 7);
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 7); // 強制推後 7 天
     
-    const minYear = today.getFullYear();
-    const minMonth = String(today.getMonth() + 1).padStart(2, '0');
-    const minDay = String(today.getDate()).padStart(2, '0');
+    const minYear = targetDate.getFullYear();
+    const minMonth = String(targetDate.getMonth() + 1).padStart(2, '0');
+    const minDay = String(targetDate.getDate()).padStart(2, '0');
     
     dateInput.min = `${minYear}-${minMonth}-${minDay}`;
   }
